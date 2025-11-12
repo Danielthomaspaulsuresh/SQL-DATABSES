@@ -30,7 +30,7 @@ DELETE FROM workers where id = 5;
 DELETE from workers;
 SHOW TABLES;
 DROP TABLE workers;
-
+--- NORMALIZATION ----
 CREATE TABLE workers
 ( id INT PRIMARY KEY auto_increment,
  first_name VARCHAR(50)not null,
@@ -78,7 +78,9 @@ CREATE TABLE country
 
 );
 
-INSERT INTO country (ctry_name,short_name) values ('australia','aus'),
+INSERT INTO country (ctry_name,short_name) 
+values
+ ('australia','aus'),
 ('america','USA'),
 ('america','USA'),
 ('america','USA'),
@@ -119,6 +121,24 @@ select * from workers;
 
 ALTER TABLE workers DROP column department, DROP column country;
 select * from workers;
+desc workers;
+use office;
 
+ALTER TABLE workers MODIFY country_id INT NULL;
 
  
+drop table workers;
+
+select * from workers where email = 'danny2250197@gmail.com';
+
+INSERT INTO workers(first_name,last_name,email,gender,contact,salary,date_of_join,department_id,country_id)
+VALUES ('AKIL','kumaran','akilikil@gmail.com','male','4124512415','3000','2027-12-12','4',NULL);
+
+DELETE FROM workers where first_name ='AKIL';
+SELECT * FROM workers where first_name = 'dhatchu' and last_name = 'daniel';
+SELECT * FROM workers where first_name = 'dhatchu' or last_name = 'dani';
+
+SELECT first_name,last_name, salary from workers;
+SELECT concat(first_name,' ',last_name) as full_name, salary from workers;
+
+--JOINS & TYPES -
