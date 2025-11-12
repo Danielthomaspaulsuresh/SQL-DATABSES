@@ -119,12 +119,12 @@ VALUES('daniel','thomas','danny2250197@gmail.com','male','7305421399','40000','2
 
 select * from workers;
 
-ALTER TABLE workers DROP column department, DROP column country;
+ALTER TABLE workers DROP column department, DROP column country; 
 select * from workers;
 desc workers;
 use office;
 
-ALTER TABLE workers MODIFY country_id INT NULL;
+ALTER TABLE workers MODIFY country_id INT NULL; -- modify the data type inside the table 
 
  
 drop table workers;
@@ -135,10 +135,10 @@ INSERT INTO workers(first_name,last_name,email,gender,contact,salary,date_of_joi
 VALUES ('AKIL','kumaran','akilikil@gmail.com','male','4124512415','3000','2027-12-12','4',NULL);
 
 DELETE FROM workers where first_name ='AKIL';
-SELECT * FROM workers where first_name = 'dhatchu' and last_name = 'daniel';
-SELECT * FROM workers where first_name = 'dhatchu' or last_name = 'dani';
+SELECT * FROM workers where first_name = 'dhatchu' and last_name = 'daniel'; ---AND statement shows the first and last name
+SELECT * FROM workers where first_name = 'dhatchu' or last_name = 'dani'; --- the (or) statement shows that the either this or that inside the table is correct
 
 SELECT first_name,last_name, salary from workers;
-SELECT concat(first_name,' ',last_name) as full_name, salary from workers;
+SELECT concat(first_name,' ',last_name) as full_name, salary from workers; -- concat helps to join the colum and AS statemnentb helps to potray the name in the show table not the main one
 
 --JOINS & TYPES -
