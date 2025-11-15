@@ -142,3 +142,56 @@ SELECT first_name,last_name, salary from workers;
 SELECT concat(first_name,' ',last_name) as full_name, salary from workers; -- concat helps to join the colum and AS statemnentb helps to potray the name in the show table not the main one
 
 --JOINS & TYPES -
+
+USE office;
+select * from workers;
+
+SELECT e.id, e.first_name,e.last_name, e.salary, e.country_id from workers as e;
+
+--INNER JOIN--
+
+SELECT e.id, e.first_name,e.last_name, e.salary, e.country_id, c.id,c.ctry_name,c.short_name
+FROM workers AS e INNER JOIN country AS c ON e.country_id = c.id;
+
+
+
+SELECT e.country_id,c.id,c.ctry_name,c.short_name
+from workers as e inner join country as c on e.country_id = c.id;
+--LKEFT JOIN
+SELECT e.country_id,c.id,c.ctry_name,c.short_name
+from workers as e LEFT join country as c on e.country_id = c.id;
+
+--right join
+SELECT e.country_id,c.id,c.ctry_name,c.short_name
+from workers as e RIGHT join country as c on e.country_id = c.id;
+
+
+SELECT e.country_id,c.id,c.ctry_name,c.short_name
+from workers as e CROSS join country as c;
+select department as d;
+
+select distinct (e.department_id),d.dept_name from workers as e inner join department as d on e.department_id = d.id;
+
+use office;
+select * from workers order by (salary);
+
+select * from workers order by (salary) desc;
+
+select concat(first_name, ' ' , last_name) as full_name, salary from workers;
+select concat(first_name, ' ' , last_name) as full_name, format(salary, 0)as salary from workers;
+
+--view
+
+SELECT * FROM workers;
+
+SELECT first_name, last_name,email,gender, salary from workers;
+
+CREATE VIEW workerview as 
+SELECT first_name, last_name,email,gender, salary from workers;
+
+CREATE VIEW workerview as 
+SELECT first_name, last_name,email,gender, salary from workers;
+
+SELECT * from workerview;
+
+
