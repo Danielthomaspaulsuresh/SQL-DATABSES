@@ -194,4 +194,77 @@ SELECT first_name, last_name,email,gender, salary from workers;
 
 SELECT * from workerview;
 
+--store procedure--
+DELIMITER //
 
+CREATE PROCEDURE workersid(IN w_id int)
+BEGIN
+
+SELECt * FROM workers where id = w_id;
+
+END
+
+DELIMITER ;
+
+CALL workersid(3);
+
+SELECT * from workers;
+
+DELIMITER //
+
+CREATE PROCEDURE genders(IN g_id varchar(50))
+BEGIN 
+
+select * from workers where gender = g_id;
+
+END //
+
+DELIMITER ;
+DRop procedure genders;
+
+CALL genders('male');
+
+DELIMITER //
+
+CREATE PROCEDURE GMAILNAME(IN G_ID varchar(50))
+BEGIN 
+SELECT * FROM workers where email = G_ID;
+
+END //
+DELIMITER ;
+CALL GMAILNAME('danny2250197@gmail.com');
+
+DELIMITER // 
+CREATE PROCEDURE workersdetails(IN w_first_name varchar(50), IN w_last_name varchar(50))
+BEGIN
+INSERT INTO workers (first_name,last_name) values (w_first_name,w_last_name);
+END
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE InsertWorkerDetails(
+    IN w_first_name VARCHAR(50),
+    IN w_last_name VARCHAR(50),
+    IN w_email VARCHAR(50),
+    IN w_gender VARCHAR(10),
+    IN w_contact VARCHAR(20),
+    IN w_salary DECIMAL(10,2),
+    IN w_date_of_join DATE,
+    IN w_department_id INT,
+    IN w_country_id INT
+)
+BEGIN
+    INSERT INTO workers(
+        first_name, last_name, email, gender, contact, salary, date_of_join, department_id, country_id
+    )
+    VALUES(
+        w_first_name, w_last_name, w_email, w_gender, w_contact, w_salary, w_date_of_join, w_department_id, w_country_id
+    );
+END //
+
+DELIMITER ;
+ 
+Call InsertWorkerDetails('john','cena','cena@gmail.com','male','null','400000','26-11-14','1','1')
+
+SELECT*from workers;
