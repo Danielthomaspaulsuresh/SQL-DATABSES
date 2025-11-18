@@ -267,4 +267,78 @@ DELIMITER ;
  
 Call InsertWorkerDetails('john','cena','cena@gmail.com','male','null','400000','26-11-14','1','1')
 
-SELECT*from workers;
+SELECT*from workers
+use office;
+---string FUNCTION 
+
+SELECT concat(first_name,' ',last_name,' ',salary) from workers;
+select UPPER(first_name) as caps from workers;
+select LOWER(first_name) as caps from workers;
+select substring(first_name , 2 ) as full_name from workers;
+
+select first_name,length(first_name) as length from workers;
+
+SELECT concat(first_name,' ',last_name) as full_name ,length(concat(first_name,last_name))as length from workers;
+
+CREATE TABLE orders (
+ID int primary key,
+customer_id int,
+order_date date,
+total_amount decimal(10,2)
+);
+
+INSERT INTO orders (ID,customer_id,order_date,total_amount)
+values(1, 101, '2024-11-14', 200.89),
+(2,102,'2024-04-12',90.23),
+(3,103,'2023-12-07',555.96),
+(4,102,'2022-01-23',908.45),
+(5,103,'2021-01-21',9876.34);
+
+select * from orders;
+
+---AGGREGATE FUNCTION
+
+SELECt count(*) as total_records from orders;
+
+SELECT SUM(total_amount) as total_value from orders;
+
+select max(total_amount) from orders;
+
+select MIN(total_amount) from orders;
+
+SELECT AVG(total_amount) from orders;
+
+- - date function :
+
+SELECT NOW() AS cureent_time;
+
+select * from orders;
+
+SELECT DATE_FORMAT(order_date,"%Y-%m-%d") as not_updated from orders;
+SELECT DATE_FORMAT(order_date,"%d-%m-%Y") as FORMATED from orders;
+
+---MATH FUNCTIOM
+
+SELECT ID,customer_id,total_amount from orders;
+
+SELECT ID,customer_id,round(total_amount) from orders;
+
+SELECT ID,customer_id,ceil(total_amount) from orders;
+
+SELECT ID,customer_id,floor(total_amount) from orders; -- decrement
+
+--group -by
+
+SELECT* from orders;
+
+select customer_id, count(*) as total_orders
+from orders
+group by customer_id;
+
+select customer_id, sum(total_amount) as total_spend
+from orders
+group by customer_id;
+
+SELECT customer_id, count(*) as total_orders, sum(total_amount) as total_spent
+from orders
+group by customer_id;
