@@ -342,3 +342,110 @@ group by customer_id;
 SELECT customer_id, count(*) as total_orders, sum(total_amount) as total_spent
 from orders
 group by customer_id;
+
+use office;
+
+
+CREATE TABLE Orders_Bad (
+    order_id INT,
+    customer_name VARCHAR(50),
+    customer_phone VARCHAR(15),
+    product1 VARCHAR(50),
+    product2 VARCHAR(50),
+    product3 VARCHAR(50),
+    total_amount DECIMAL(10,2)
+);
+INSERT INTO Orders_Bad 
+(order_id, customer_name, customer_phone, product1, product2, product3, total_amount)
+VALUES
+(101, 'Daniel Thomas', '0456781234', 'Shoes', 'Socks', NULL, 60.00),
+(102, 'Sarah Lee', '0487623344', 'T-Shirt', 'Cap', 'Socks', 50.00),
+(103, 'Michael Brown', '0471239988', 'Shoes', NULL, NULL, 50.00);
+
+
+CREATE TABLE  orders_1nf
+
+( order_id INT,
+customer_name varchar(50),
+customer_phone varchar(50),
+product varchar(50),
+price decimal(10,2)
+
+);
+
+INSERT INTO Orders_1NF 
+(order_id, customer_name, customer_phone, product, price)
+VALUES
+(101, 'Daniel Thomas', '0456781234', 'Shoes', 50.00),
+(101, 'Daniel Thomas', '0456781234', 'Socks', 10.00),
+
+(102, 'Sarah Lee', '0487623344', 'T-Shirt', 25.00),
+(102, 'Sarah Lee', '0487623344', 'Cap', 15.00),
+(102, 'Sarah Lee', '0487623344', 'Socks', 10.00),
+
+(103, 'Michael Brown', '0471239988', 'Shoes', 50.00);
+
+SELECT * FROM Orders_1nf;
+---2nf
+CREATE TABLE Orders_2nf (
+    order_id INT PRIMARY KEY,
+    customer_name VARCHAR(50),
+    customer_phone VARCHAR(15)
+);
+INSERT INTO Orders_2nf (order_id, customer_name, customer_phone) VALUES
+(101, 'Daniel Thomas', '0456781234'),
+(102, 'Sarah Lee', '0487623344'),
+(103, 'Michael Brown', '0471239988');
+
+SELECT*FROM Orders_2nf;
+
+CREATE TABLE Order_Items (
+    item_id INT PRIMARY KEY,
+    order_id INT,
+    product VARCHAR(50),
+    price DECIMAL(10,2)
+);
+
+INSERT INTO Order_Items (item_id, order_id, product, price) VALUES
+(1, 101, 'Shoes', 50.00),
+(2, 101, 'Socks', 10.00),
+(3, 102, 'T-Shirt', 25.00),
+(4, 102, 'Cap', 15.00),
+(5, 102, 'Socks', 10.00),
+(6, 103, 'Shoes', 50.00);
+
+SELECT * FROM Orders_2nf;
+select*from Order_Items;
+CREATE TABLE Products (
+    product_id INT PRIMARY KEY,
+    product_name VARCHAR(50),
+    price DECIMAL(10,2)
+);
+INSERT INTO Products (product_id, product_name, price) VALUES
+(1, 'Shoes', 50.00),
+(2, 'Socks', 10.00),
+(3, 'T-Shirt', 25.00),
+(4, 'Cap', 15.00);
+
+CREATE TABLE Order_Items_Final (
+    item_id INT PRIMARY KEY,
+    order_id INT,
+    product_id INT
+);
+
+INSERT INTO Order_Items_Final (item_id, order_id, product_id) VALUES
+(1, 101, 1),
+(2, 101, 2),
+(3, 102, 3),
+(4, 102, 4),
+(5, 102, 2),
+(6, 103, 1);
+
+DROP TABLE Orders_bad;
+SELECT * FROM Orders_bad;
+select * FROm orders_1nf;
+Select* from Orders_2nf;
+SELECT * FROM Order_Items;
+SELECT * FROM Products;
+select *from Order_Items_Final;
+

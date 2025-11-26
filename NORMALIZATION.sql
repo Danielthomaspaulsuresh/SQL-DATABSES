@@ -1,104 +1,92 @@
-CREATE DATABASE NORMALIZATION;
-CREATE TABLE student_courses ( 
-student_id INT,
-student_name VARCHAR(50),
-courses VARCHAR(50)
+use normalization;
+CREATE TABLE student_marks_unf (
+    Student_ID VARCHAR(10),
+    Student_Name VARCHAR(100),
+    Subjects VARCHAR(255),   -- repeating group
+    Marks VARCHAR(255)       -- repeating group
 );
 
-INSERT INTO student_courses (student_id,student_name,courses)
-values (1,'daniel','maths,english'),
-(2,'saran','science'),
-(3,'ragul','maths,science');
+INSERT INTO student_marks_unf VALUES
+('S001', 'Daniel Thomas', 'Maths,Science,English', '85,90,88'),
+('S002', 'Ragul Kumar', 'Maths,Science', '78,82'),
+('S003', 'Saran Kumar', 'English,Computer', '88,91');
 
-SELECT * FROM student_courses;
+-- 1nf
 
- -- 1nf
- 
- CREATE TABLE student_1nf (
- student_id int,
- student_name VARCHAR(50),
- course_split VARCHAR(20)
- );
- 
- INSERT INTO student_1nf(student_id,student_name,course_split)
- values (1,'daniel','maths'),
- (1,'daniel','english'),
- (2,'saran','science'),
- (3,'ragul','maths'),
- (3,'ragul','science');
- 
- SELECT * FROM student_1nf;
- 
-  -- 1nf completed all the values are atomic
-  
+CREATE TABLE student_seprate (
+student_id INT ,
+student_name varchar(50),
+subjects varchar(50),
+marks varchar(50)
 
--- 2nf --
+);
 
-CREATE TABLE students_2nf (
+INSERT INTO student_seprate values(5001,'Daniel Thomas','Maths','85'),
+(5001,'Daniel Thomas','Science','90'),
+(5001,'Daniel Thomas','English','88'),
+(5002,'Ragul Kumar','Maths','78'),
+(5002,'Ragul Kumar','Science','82'),
+(5003,'Saran Kumar','English','88'),
+(5003,'Saran Kumar','Computer','91')
+
+SELECT * FROM student_seprate;
+
+-- 2NF
+
+CREATE TABLE student_seprate_1 (
+student_id INT ,
+student_name VARCHAR(50)
+);
+
+INSERT INTO student_seprate_1(student_id,student_name)
+ VALUES(5001,'Daniel Thomas'),
+ (5002,'Ragul Kumar'),
+ (5003,'Saran Kumar')
+ 
+select * from student_seprate_1;
+
+CREATE TABLE student_seprate_2 (
 student_id int,
+subjects VARCHAR(50),
+marks VARCHAR(50)
+);
+
+
+INSERT INTO student_seprate_2 (student_id,subjects,marks)
+values (5001,'Maths','85'),
+(5001,'Science','90'),
+(5001,'English','88'),
+(5002,'Maths','78'),
+(5002,'Science','82'),
+(5003,'English','88'),
+(5003,'Computer','91')
+
+-- 3nf
+
+CREATE TABLE student_seprate_3 (
+student_id varchar(50) PRIMARY KEY,
 student_name varchar(50)
 );
- 
-INSERT INTO students_2nf(student_id,student_name)
-values (1,'daniel'),
-(2,'saran'),
-(3,'ragul') 
- 
- select*from students_2nf;
- 
- CREATE TABLE student_id_courses (
- student_id int,
- courses varchar(50)
- );
- 
- INSERT INTO student_id_courses (student_id,courses)
- values (1,'maths'),
- (1,'englis'),
- (2,'science'),
- (3,'maths'),
- (3,'science')
 
- select*from students_2nf;
- select*from student_id_courses;
- 
- -- 2nf completed
- 
-  -- 3nf --
-  
-  
- CREATE TABLE student_courses_Dept (student_id int,
- courses varchar(50),
- courses_dept varchar(50)
- );
- 
- INSERT INTO student_courses_dept (student_id,courses,courses_dept)
- values (1,'math','math department'),
- (2,'english','english department'),
- (3,'science','science department')
- 
- CREATE TABLE courses_dept_id (courses varchar(50),
- courses_dept varchar(50)
- );
- 
- INSERT INTO courses_dept_id (courses,courses_dept)
- values ('math','math department'),
- ('english','english department'),
- ('science','science department')
- 
- create table student_id_and_courses (student_id int,
- courses varchar(50));
- 
- INSERT INTO student_id_and_courses(student_id, courses)
-VALUES
-(1,'maths'),
-(1,'english'),
-(2,'science'),
-(3,'maths'),
-(3,'science');
- 
+INSERT INTO student_seprate_3 (student_id,student_name)
+VALUES('5001','Daniel Thomas'),
+('5002','Ragul Kumar'),
+('5003','Saran Kumar')
 
- 
- 
- 
- 
- 
+CREATE TABLE student_seprate_4 (
+student_id varchar(50),
+subjects varchar(50),
+marks varchar(50),
+-- PRIMARY KEY (student_id,subjects),
+FOREIGN KEY (student_id) REFERENCES student_seprate_3(student_id)
+
+);
+
+INSERT INTO student_seprate_4 (student_id,subjects,marks) VALUES
+('S001', 'Maths', 85),
+('S001', 'Science', 90),
+('S001', 'English', 88),
+('S002', 'Maths', 78),
+('S002', 'Science', 82),
+('S003', 'English', 88),
+('S003', 'Computer', 91);
