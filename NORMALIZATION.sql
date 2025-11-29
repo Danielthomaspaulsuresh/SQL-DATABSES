@@ -90,3 +90,99 @@ INSERT INTO student_seprate_4 (student_id,subjects,marks) VALUES
 ('S002', 'Science', 82),
 ('S003', 'English', 88),
 ('S003', 'Computer', 91);
+
+-- JOINS --
+
+CREATE TABLE branch (
+branch_id INT PRIMARY KEY auto_increment,
+br_name VARCHAR(50) NOT null,
+addr VARCHAR(300) 
+);
+
+INSERT INTO branch VALUES(1,"Chennai","16 ABC Road"),
+(2,"Coimbatore","120 15th Block"),
+(3,"Mumbai","25 XYZ Road"),
+(4,"Hydrabad","32 10th Street");
+
+CREATE TABLE employee (
+emp_id INT PRIMARY KEY AUTO_increment,
+enmae varchar(30) NOT NULL,
+job_desc VARCHAR(30),
+salary INT,
+branch_id INT,
+FOREIGN KEY (branch_id) REFERENCES branch(branch_id)
+
+
+);
+
+INSERT INTO employee VALUES(1,'Ram','ADMIN',1000000,2);
+INSERT INTO employee VALUES(2,'Harini','MANAGER',2500000,2);
+INSERT INTO employee VALUES(3,'George','SALES',2000000,1);
+INSERT INTO employee VALUES(4,'Ramya','SALES',1300000,2);
+INSERT INTO employee VALUES(5,'Meena','HR',2000000,3);
+INSERT INTO employee VALUES(6,'Ashok','MANAGER',3000000,1);
+INSERT INTO employee VALUES(7,'Abdul','HR',2000000,1);
+INSERT INTO employee VALUES(8,'Ramya','ENGINEER',1000000,2);
+INSERT INTO employee VALUES(9,'Raghu','CEO',8000000,3);
+INSERT INTO employee VALUES(10,'Arvind','MANAGER',2800000,3);
+INSERT INTO employee VALUES(11,'Akshay','ENGINEER',1000000,1);
+INSERT INTO employee VALUES(12,'John','ADMIN',2200000,1);
+INSERT INTO employee VALUES(13,'Abinaya','ENGINEER',2100000,2);
+INSERT INTO employee VALUES(14,'Vidya','ADMIN',2200000,NULL);
+INSERT INTO employee VALUES(15,'Ranjani','ENGINEER',2100000,NULL);
+
+SELECT * FROM employee;
+SELECT * FROM branch;
+
+-- INNER JOIN
+
+select  e.emp_id,e.enmae,e.job_desc,b.br_name
+from employee as e
+inner join branch as b
+on e.branch_id = b.branch_id
+order by e.emp_id;
+
+-- LEFT JOIN
+
+SELECT e.emp_id,e.enmae,e.job_desc,b.br_name
+from employee as e
+left join branch as b
+on e.branch_id = b.branch_id
+order by e.emp_id;
+
+SELECT * FROM employee;
+SELECT * FROM branch;
+
+SELECT e.emp_id,e.enmae,e.job_desc,b.br_name
+from employee as e
+RIGHT join branch as b
+on e.branch_id = b.branch_id
+order by e.emp_id;
+
+-- br_name emp_count
+-- br_name emp_count
+
+SELECT b.br_name, count(e.emp_id)
+from branch as b
+join employee as e
+on b.branch_id = e.branch_id
+group by e.branch_id;
+
+-- UNION 
+
+CREATE TABLE clients (
+client_id INT PRIMARY KEY AUTO_INCREMENT,
+location VARCHAR(30) NOT NULL,
+addr VARCHAR(200) );
+
+INSERT INTO clients VALUES(1,"NewYork","25 10th Block");
+INSERT INTO clients VALUES(2,"Coimbatore","120 15th Block");
+INSERT INTO clients VALUES(3,"London","21 ABC Road");
+
+-- combines the two tables removing duplicates
+
+SELECT * FROM branch
+UNION 
+SELECT * FROM clients;
+
+ 
